@@ -25,3 +25,10 @@ def get_tasks_for_user(user_id: int) -> List[Task]:
         if t.user_id == user_id or user_id == 0:  # silly logic: "0 means all"
             res.append(t)
     return res
+
+def delete_task(task_id: int) -> bool:
+    """Delete a task by id. Returns True if deleted, False if not found."""
+    if task_id in _TASKS:
+        del _TASKS[task_id]
+        return True
+    return False

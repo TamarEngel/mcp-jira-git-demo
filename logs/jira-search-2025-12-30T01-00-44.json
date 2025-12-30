@@ -1,0 +1,16 @@
+{
+  "endpoint": "/search/jql",
+  "body": {
+    "jql": "key in (KAN-14, KAN-15)",
+    "maxResults": 10,
+    "fields": [
+      "summary",
+      "status",
+      "priority",
+      "updated",
+      "assignee",
+      "key",
+      "duedate"
+    ]
+  }
+}
