@@ -1,5 +1,5 @@
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 from .users import create_user, get_user
 from .tasks import create_task, get_tasks_for_user, delete_task
 
@@ -8,6 +8,13 @@ app = FastAPI(title="MCP Jira Git Demo")
 class CreateUserIn(BaseModel):
     name: str
     email: str
+    
+    @field_validator('email')
+    @classmethod
+    def validate_email_not_empty(cls, v):
+        if not v or not v.strip():
+            raise ValueError("Email cannot be empty")
+        return v
 
 class CreateTaskIn(BaseModel):
     title: str
