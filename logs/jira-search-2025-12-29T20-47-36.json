@@ -1,0 +1,14 @@
+{
+  "endpoint": "/search/jql",
+  "body": {
+    "jql": "assignee = currentUser() AND priority in (Highest, High) AND status != Done",
+    "maxResults": 50,
+    "fields": [
+      "summary",
+      "status",
+      "priority",
+      "updated",
+      "assignee"
+    ]
+  }
+}
