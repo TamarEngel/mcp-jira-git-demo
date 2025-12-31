@@ -27,7 +27,10 @@ def api_get_user(user_id: int):
 
 @app.post("/tasks")
 def api_create_task(payload: CreateTaskIn):
-    # missing: check that user exists (great Jira task)
+    # Check that user exists before creating task
+    user = get_user(payload.user_id)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
     t = create_task(payload.title, payload.user_id)
     return {"id": t.id, "title": t.title, "user_id": t.user_id, "status": t.status}
 
