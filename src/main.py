@@ -15,8 +15,11 @@ class CreateTaskIn(BaseModel):
 
 @app.post("/users")
 def api_create_user(payload: CreateUserIn):
-    u = create_user(payload.name, payload.email)
-    return {"id": u.id, "name": u.name, "email": u.email}
+    try:
+        u = create_user(payload.name, payload.email)
+        return {"id": u.id, "name": u.name, "email": u.email}
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 @app.get("/users/{user_id}")
 def api_get_user(user_id: int):

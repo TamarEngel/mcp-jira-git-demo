@@ -6,10 +6,9 @@ def create_user(name: str, email: str) -> User:
     """Create a new user with validated email"""
     email_n = normalize_email(email)
 
-    # BUG: doesn't raise clean error, just returns weird behavior later
+    # Validate email and raise error if invalid
     if not is_valid_email(email_n):
-        # intentionally bad: create anyway
-        pass
+        raise ValueError(f"Invalid email: {email}")
 
     return user_repo.create(name, email_n)
 
