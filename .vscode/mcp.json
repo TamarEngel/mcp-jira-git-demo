@@ -1,0 +1,14 @@
+{
+	"servers": {
+		"jira-mcp-server": {
+			"type": "stdio",
+			"command": "python",
+			"args": [
+				"-m",
+				"src.server.server"
+			],
+			"cwd": "c:\\tamar\\kamaTech\\mcp-server"
+		}
+	},
+	"inputs": []
+}

@@ -19,9 +19,9 @@ def create_task(title: str, user_id: int) -> Task:
     return task
 
 def get_tasks_for_user(user_id: int) -> List[Task]:
-    # BUG: returns tasks for everyone sometimes (intentional demo bug)
+    # Fixed: now only returns tasks for the specified user
     res = []
     for t in _TASKS.values():
-        if t.user_id == user_id or user_id == 0:  # silly logic: "0 means all"
+        if t.user_id == user_id:
             res.append(t)
     return res
