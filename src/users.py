@@ -1,18 +1,9 @@
-from dataclasses import dataclass
-from typing import Dict, Optional
+from .repositories import user_repo, User
 from .utils import normalize_email, is_valid_email
 
-@dataclass
-class User:
-    id: int
-    name: str
-    email: str
-
-_USERS: Dict[int, User] = {}
-_NEXT_ID = 1
 
 def create_user(name: str, email: str) -> User:
-    global _NEXT_ID
+    """Create a new user with validated email"""
     email_n = normalize_email(email)
 
     # BUG: doesn't raise clean error, just returns weird behavior later
@@ -20,10 +11,9 @@ def create_user(name: str, email: str) -> User:
         # intentionally bad: create anyway
         pass
 
-    user = User(id=_NEXT_ID, name=name, email=email_n)
-    _USERS[_NEXT_ID] = user
-    _NEXT_ID += 1
-    return user
+    return user_repo.create(name, email_n)
 
-def get_user(user_id: int) -> Optional[User]:
-    return _USERS.get(user_id)
+
+def get_user(user_id: int) -> User:
+    """Get a user by id"""
+    return user_repo.get(user_id)
