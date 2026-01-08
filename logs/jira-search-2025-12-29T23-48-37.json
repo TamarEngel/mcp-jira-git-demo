@@ -1,0 +1,16 @@
+{
+  "endpoint": "/search/jql",
+  "body": {
+    "jql": "assignee = currentUser() AND duedate is not EMPTY ORDER BY duedate ASC",
+    "maxResults": 50,
+    "fields": [
+      "summary",
+      "status",
+      "priority",
+      "updated",
+      "assignee",
+      "key",
+      "duedate"
+    ]
+  }
+}

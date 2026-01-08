@@ -1,27 +1,17 @@
-from dataclasses import dataclass
-from typing import Dict, List
+from typing import List
+from .repositories import task_repo, Task
 
-@dataclass
-class Task:
-    id: int
-    title: str
-    user_id: int
-    status: str = "To Do"  # later you can add transitions
-
-_TASKS: Dict[int, Task] = {}
-_NEXT_TASK_ID = 1
 
 def create_task(title: str, user_id: int) -> Task:
-    global _NEXT_TASK_ID
-    task = Task(id=_NEXT_TASK_ID, title=title, user_id=user_id)
-    _TASKS[_NEXT_TASK_ID] = task
-    _NEXT_TASK_ID += 1
-    return task
+    """Create a new task"""
+    return task_repo.create(title, user_id)
+
 
 def get_tasks_for_user(user_id: int) -> List[Task]:
-    # BUG: returns tasks for everyone sometimes (intentional demo bug)
-    res = []
-    for t in _TASKS.values():
-        if t.user_id == user_id or user_id == 0:  # silly logic: "0 means all"
-            res.append(t)
-    return res
+    """Get all tasks for a specific user (fixed: no longer returns all tasks when user_id=0)"""
+    return task_repo.get_by_user(user_id)
+
+
+def delete_task(task_id: int) -> bool:
+    """Delete a task by id. Returns True if deleted, False if not found."""
+    return task_repo.delete(task_id)

@@ -1,0 +1,14 @@
+{
+  "endpoint": "/search/jql",
+  "body": {
+    "jql": "assignee = currentUser() AND status = \"To Do\" ORDER BY duedate ASC",
+    "maxResults": 50,
+    "fields": [
+      "summary",
+      "status",
+      "priority",
+      "updated",
+      "assignee"
+    ]
+  }
+}

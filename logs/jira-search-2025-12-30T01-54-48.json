@@ -1,0 +1,15 @@
+{
+  "endpoint": "/search/jql",
+  "body": {
+    "jql": "project = KAN ORDER BY priority DESC, duedate ASC",
+    "maxResults": 20,
+    "fields": [
+      "summary",
+      "status",
+      "priority",
+      "updated",
+      "assignee",
+      "duedate"
+    ]
+  }
+}

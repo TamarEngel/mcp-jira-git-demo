@@ -1,8 +1,9 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from .users import create_user, get_user
-from .tasks import create_task, get_tasks_for_user
 from .repositories import task_repo
+from .tasks import create_task, get_tasks_for_user, delete_task
+
 
 app = FastAPI(title="MCP Jira Git Demo")
 
@@ -31,7 +32,10 @@ def api_get_user(user_id: int):
 
 @app.post("/tasks")
 def api_create_task(payload: CreateTaskIn):
-    # missing: check that user exists (great Jira task)
+    # Check that user exists before creating task
+    user = get_user(payload.user_id)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
     t = create_task(payload.title, payload.user_id)
     return {"id": t.id, "title": t.title, "user_id": t.user_id, "status": t.status}
 
@@ -58,3 +62,10 @@ def api_transition_task(task_id: int, payload: TaskStatusUpdate):
     # Update status
     updated_task = task_repo.transition(task_id, payload.to_status)
     return {"id": updated_task.id, "title": updated_task.title, "user_id": updated_task.user_id, "status": updated_task.status}
+
+@app.delete("/tasks/{task_id}")
+def api_delete_task(task_id: int):
+    if delete_task(task_id):
+        return {"deleted": True, "id": task_id}
+    else:
+        raise HTTPException(status_code=404, detail="Task not found")
