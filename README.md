@@ -11,7 +11,7 @@ A FastAPI application demonstrating a user and task management system with email
 - ✅ Delete operations for tasks
 - ✅ Repository pattern for data storage
 
-## Prerequisites
+## Prerequisite
 
 - Python 3.11+
 - pip (Python package manager)

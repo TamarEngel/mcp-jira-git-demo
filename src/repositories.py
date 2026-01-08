@@ -73,6 +73,13 @@ class TaskRepository:
             del self._tasks[task_id]
             return True
         return False
+    
+    def transition(self, task_id: int, to_status: str) -> Optional[Task]:
+        """Change task status. Returns updated task or None if not found."""
+        if task_id not in self._tasks:
+            return None
+        self._tasks[task_id].status = to_status
+        return self._tasks[task_id]
 
 
 # Global repository instances
